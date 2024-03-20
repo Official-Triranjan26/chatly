@@ -14,17 +14,14 @@ const authLogin = async (req,res) => {
   const user = await UserModel.findOne({email:email});
   console.log(user)
   if(user && (await user.matchPassword(password))){
-    return res.status(200).json({
-      success:true,
-      data:{
-        id:user._id,
-        name:user.name,
-        email:user.email,
-        password:user.password,
-        pic:user.pic,
-      },
-      token:generateToken(user._id)
-    })
+    return res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      pic: user.pic,
+      token: generateToken(user._id),
+    });
   }
   else{
     return res.status(400).json({

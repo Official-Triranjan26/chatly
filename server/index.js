@@ -8,6 +8,7 @@ const connectDB = require('./cofig/DBconnection');
 
 const userRoutes = require('./routes/userRoutes')
 const chatRoutes = require('./routes/chatRoutes')
+const messageRoute = require('./routes/messageRoutes')
 
 dotenv.config();
 connectDB();
@@ -18,6 +19,7 @@ app.get("/",(req,res)=>{
 })
 app.use('/api/user',userRoutes);
 app.use('/api/chat',chatRoutes);
+app.use('/api/message',messageRoute);
 
 
 app.get("*", (req, res) => {

@@ -1,7 +1,7 @@
-import React , { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
@@ -11,29 +11,27 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const handleClick = () => setShow(!show);
-  const showToastMessage = (state,s) => {
-    if(state ==='warn'){
+  const showToastMessage = (state, s) => {
+    if (state === "warn") {
       return toast.warn(s, {
-        position: "bottom-center"
+        position: "bottom-center",
       });
-    }
-    else if(state ==='error'){
+    } else if (state === "error") {
       return toast.error(s, {
-        position: "bottom-center"
+        position: "bottom-center",
       });
-    }
-    else if(state ==='success'){
+    } else if (state === "success") {
       return toast.success(s, {
-        position: "bottom-center"
+        position: "bottom-center",
       });
     }
-  }
+  };
 
-  const submit = async()=>{
+  const submit = async () => {
     // console.log(email);
     setLoading(true);
-    if(!email || !password){
-      showToastMessage('warn',"credentials cannot be empty !!");
+    if (!email || !password) {
+      showToastMessage("warn", "credentials cannot be empty !!");
       setLoading(false);
       return;
     }
@@ -50,17 +48,16 @@ const Login = () => {
         config
       );
 
-      showToastMessage('success',"Login Successful !");
+      showToastMessage("success", "Login Successful !");
       // setUser(data);
       localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
       navigate("/chats");
     } catch (error) {
-      showToastMessage('error',error);
+      showToastMessage("error", error);
       setLoading(false);
     }
   };
-
 
   return (
     <div className="p-2 lg:px-10 lg:py-2">
@@ -91,14 +88,26 @@ const Login = () => {
             {show ? "Hide" : "Show"}
           </span>
         </div>
+        <button
+          type="button"
+          onClick={() => {
+            setEmail("guest@gmail.com");
+            setPassword("1234");
+          }}
+          className="flex items-center justify-center w-full p-2 bg-[#8774e1] rounded-md text-white mt-5 "
+          disabled={loading}
+        >
+          <span className="font-medium"> Guest Credentials</span>
+        </button>
 
         <button
-            type="button"
-            onClick={submit}
-            className="flex items-center justify-center w-full p-2 bg-[#8774e1] rounded-md text-white mt-5 "
-            disabled={loading}
-          >
-            {loading? <svg
+          type="button"
+          onClick={submit}
+          className="flex items-center justify-center w-full p-2 bg-[#8774e1] rounded-md text-white mt-5 "
+          disabled={loading}
+        >
+          {loading ? (
+            <svg
               className=" h-5 w-5 animate-spin text-white"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -118,10 +127,16 @@ const Login = () => {
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               ></path>
             </svg>
-            :" "}
-            <span className="font-medium"> {loading? 'Processing... ':'Signin'}</span>
-          </button>
-          <ToastContainer />
+          ) : (
+            " "
+          )}
+          <span className="font-medium">
+            {" "}
+            {loading ? "Processing... " : "Signin"}
+          </span>
+        </button>
+
+        <ToastContainer/>
       </form>
     </div>
   );

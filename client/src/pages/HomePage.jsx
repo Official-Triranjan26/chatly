@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Tab } from "@headlessui/react";
 import Login from "../components/Login";
 import Signup from "../components/Signup";
 import logo from '../images/chatly.png'
+import { useNavigate } from "react-router-dom";
 
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("userInfo"));
+
+    if (user) navigate("/chats");
+  }, [navigate]);
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
